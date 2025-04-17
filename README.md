@@ -16,6 +16,7 @@ On the `Files` row in the website, click on the `jar` file to download it.
 - [kafka-clients-3.5.0.jar](https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients/3.5.0)
 - [spark-token-provider-kafka-0-10_2.12-3.5.0.jar](https://mvnrepository.com/artifact/org.apache.spark/spark-sql-kafka-0-10_2.12/3.5.0)
 - [spark-token-provider-kafka-0-10_2.12-3.5.0.jar](https://mvnrepository.com/artifact/org.apache.spark/spark-token-provider-kafka-0-10_2.12/3.5.0)
+- [postgresql-42.7.3.jar](https://mvnrepository.com/artifact/org.postgresql/postgresql/42.7.3)
 
 Put these jar files in the `jars` folder in the root of the project. This is where the Spark job will look for the jar files.
 

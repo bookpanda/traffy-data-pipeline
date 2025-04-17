@@ -3,9 +3,7 @@ from pyspark.sql import DataFrame
 from pipeline.config import settings
 
 
-def write_to_postgres(
-    batch_df: DataFrame,
-):
+def write_to_postgres(batch_df: DataFrame, batch_id):
     (
         batch_df.write.format("jdbc")
         .option("url", settings.POSTGRES_URL)

@@ -41,6 +41,10 @@ structured_df = extract_lat_long(structured_df)
 structured_df = convert_timestamp(structured_df)
 structured_df = convert_type_to_list(structured_df)
 
-structured_df.writeStream.format("console").option(
-    "truncate", False
+structured_df.writeStream.foreachBatch(write_to_postgres).outputMode("append").option(
+    "checkpointLocation", "./checkpoints/pg_sink"
 ).start().awaitTermination()
+
+# structured_df.writeStream.format("console").option(
+#     "truncate", False
+# ).start().awaitTermination()
