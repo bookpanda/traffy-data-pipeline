@@ -14,3 +14,9 @@ def write_to_postgres(batch_df: DataFrame, batch_id):
         .mode("append")
         .save()
     )
+
+
+def write_to_elasticsearch(batch_df: DataFrame, epoch_id):
+    batch_df.write.format("org.elasticsearch.spark.sql").option(
+        "es.resource", "tickets/_doc"
+    ).option("es.nodes", "localhost").option("es.port", "9200").mode("append").save()

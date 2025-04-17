@@ -37,8 +37,8 @@ Put these jar files in the `jars` folder in the root of the project. This is whe
 1. Data stream: simulated using a Python script with Traffy Fondue dataset
 2. Kafka: ingests data from stream
 3. Spark: cleans and transforms data from Kafka
-4. PostgreSQL database: stores cleaned data
-5. Cleaned data visualization + dashboards
+4. PostgreSQL/Elasticsearch database: stores cleaned data
+5. Kibana: visualizes cleaned data + dashboards
 6. AI/ML: trains on cleaned data, will be used for inferencing data from Kafka
 7. Elasticsearch database: stores predictions
 8. Predictions visualization + dashboards

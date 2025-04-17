@@ -11,7 +11,7 @@ from pipeline.spark.transforms import (
     convert_type_to_list,
     extract_lat_long,
 )
-from pipeline.spark.write import write_to_postgres
+from pipeline.spark.write import write_to_elasticsearch, write_to_postgres
 
 
 def main():
@@ -41,9 +41,15 @@ def main():
     structured_df = convert_timestamp(structured_df)
     structured_df = convert_type_to_list(structured_df)
 
-    structured_df.writeStream.foreachBatch(write_to_postgres).outputMode(
-        "append"
-    ).option("checkpointLocation", "./checkpoints/pg_sink").start().awaitTermination()
+    structured_df.writeStream.foreachBatch(
+        lambda df, epoch_id: write_to_postgres(df, epoch_id)
+    ).outputMode("append").option("checkpointLocation", "./checkpoints/pg_sink").start()
+
+    structured_df.writeStream.foreachBatch(
+        lambda df, epoch_id: write_to_elasticsearch(df, epoch_id)
+    ).outputMode("append").option("checkpointLocation", "./checkpoints/es_sink").start()
+
+    spark.streams.awaitAnyTermination()
 
 
 if __name__ == "__main__":
