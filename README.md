@@ -8,6 +8,17 @@ Download these tools before you start working on the project.
 - poetry
 - `Black Formatter` VSCode extension (also set format on save, and set as default formatter for python in `settings.json`)
 
+## Jar files for Spark
+
+On the `Files` row in the website, click on the `jar` file to download it.
+
+- [commons-pool2-2.12.0.jar](https://mvnrepository.com/artifact/org.apache.commons/commons-pool2/2.12.0)
+- [kafka-clients-3.5.0.jar](https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients/3.5.0)
+- [spark-token-provider-kafka-0-10_2.12-3.5.0.jar](https://mvnrepository.com/artifact/org.apache.spark/spark-sql-kafka-0-10_2.12/3.5.0)
+- [spark-token-provider-kafka-0-10_2.12-3.5.0.jar](https://mvnrepository.com/artifact/org.apache.spark/spark-token-provider-kafka-0-10_2.12/3.5.0)
+
+Put these jar files in the `jars` folder in the root of the project. This is where the Spark job will look for the jar files.
+
 ## Setup
 
 1. Run `poetry install` (to add packages do `poetry add <package>` and `poetry update` to update all packages)
