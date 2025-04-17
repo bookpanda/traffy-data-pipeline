@@ -13,8 +13,8 @@ df = pd.read_csv("./data/bangkok_traffy_mini.csv")
 sleep_time = 1 / settings.STREAM_INGESTION_RATE
 
 
-# replace NaN with None (to be treated as null in Avro)
 def handle_nan(data):
+    """replace NaN with None (to be treated as null in Avro)"""
     return {
         key: (None if isinstance(value, float) and math.isnan(value) else value)
         for key, value in data.items()
