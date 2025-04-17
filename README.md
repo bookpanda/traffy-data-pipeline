@@ -16,7 +16,8 @@ Download these tools before you start working on the project.
 4. Run `poetry env activate` to activate the virtual environment
 5. Run `poetry env info --path` to get the path of the virtual environment
 6. In VSCode, `Ctrl + Shift + P` and type `Python: Select Interpreter`, select `Enter interpreter path...` and paste the path of the virtual environment. This will allow intellisense for the project
-7. Run `poetry run python pipeline/main.py` to start the application
+7. Run `docker-compose up` to start the Kafka container
+8. Run `poetry run python pipeline/main.py` to start the application
 
 ## Components (flow from top to bottom)
 
