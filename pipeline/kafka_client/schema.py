@@ -20,8 +20,9 @@ def serialize_avro(data: dict) -> bytes:
     return bytes_writer.getvalue()
 
 
-def deserialize_avro(data: bytes) -> dict:
-    bytes_reader = io.BytesIO(data)
+def deserialize_avro(raw_bytes: bytes) -> str:
+    bytes_reader = io.BytesIO(raw_bytes)
     decoder = avro.io.BinaryDecoder(bytes_reader)
     reader = avro.io.DatumReader(schema)
+
     return reader.read(decoder)
