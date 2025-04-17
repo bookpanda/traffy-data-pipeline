@@ -1,0 +1,22 @@
+{
+	"type": "record",
+	"name": "TicketRecord",
+	"fields": [
+		{ "name": "ticket_id", "type": ["string", "null"] },
+		{ "name": "type", "type": ["string", "null"] },
+		{ "name": "organization", "type": ["string", "null"] },
+		{ "name": "comment", "type": ["string", "null"] },
+		{ "name": "photo", "type": ["string", "null"] },
+		{ "name": "photo_after", "type": ["string", "null"] },
+		{ "name": "coords", "type": "string" },
+		{ "name": "address", "type": ["string", "null"] },
+		{ "name": "subdistrict", "type": ["string", "null"] },
+		{ "name": "district", "type": ["string", "null"] },
+		{ "name": "province", "type": ["string", "null"] },
+		{ "name": "timestamp", "type": "string" },
+		{ "name": "state", "type": "string" },
+		{ "name": "star", "type": ["float", "null"] },
+		{ "name": "count_reopen", "type": "int" },
+		{ "name": "last_activity", "type": "string" }
+	]
+}

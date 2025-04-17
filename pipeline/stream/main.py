@@ -1,6 +1,8 @@
+import math
 import time
 
 import pandas as pd
+from tqdm import tqdm
 
 from pipeline.config import settings
 from pipeline.kafka_client import send_message
@@ -11,13 +13,22 @@ df = pd.read_csv("./data/bangkok_traffy_mini.csv")
 sleep_time = 1 / settings.STREAM_INGESTION_RATE
 
 
+# replace NaN with None (to be treated as null in Avro)
+def handle_nan(data):
+    return {
+        key: (None if isinstance(value, float) and math.isnan(value) else value)
+        for key, value in data.items()
+    }
+
+
 # 500 rows/s = 1600s
 def main():
     print(f"stream size {len(df)}")
 
-    for index, row in df.iterrows():
-        message = row.to_json()
-        send_message("raw_data", message)
+    for index, row in tqdm(df.iterrows()):
+        data = row.to_dict()
+        data = handle_nan(data)
+        send_message("raw_data", data)
 
         time.sleep(sleep_time)
 

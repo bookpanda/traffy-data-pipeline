@@ -2,6 +2,8 @@ from kafka import KafkaProducer
 
 from pipeline.config import settings
 
+from .schema import serialize_avro
+
 _producer = None
 
 
@@ -16,8 +18,9 @@ def get_producer() -> KafkaProducer:
     return _producer
 
 
-def send_message(topic: str, message: str):
+def send_message(topic: str, message: dict):
     producer = get_producer()
-    producer.send(topic, value=message)
+    message_bytes = serialize_avro(message)
+    producer.send(topic, value=message_bytes)
     producer.flush()
-    print(f"Message sent to topic {topic}: {message}")
+    # print(f"Message sent to topic {topic}: {message}")
