@@ -13,14 +13,13 @@ def get_producer() -> KafkaProducer:
         print(f"Creating Kafka producer at {settings.KAFKA_BROKER_URL}")
         _producer = KafkaProducer(
             bootstrap_servers=settings.KAFKA_BROKER_URL,
-            value_serializer=lambda v: str(v).encode("utf-8"),
+            value_serializer=lambda v: serialize_avro(v),
         )
     return _producer
 
 
 def send_message(topic: str, message: dict):
     producer = get_producer()
-    message_bytes = serialize_avro(message)
-    producer.send(topic, value=message_bytes)
+    producer.send(topic, value=message)
     producer.flush()
     # print(f"Message sent to topic {topic}: {message}")
