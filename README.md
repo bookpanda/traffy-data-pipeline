@@ -10,6 +10,13 @@ Download these tools before you start working on the project.
 
 ## Setup
 
+1. Run `poetry install` (to add packages do `poetry add <package>` and `poetry update` to update all packages)
+2. Copy `.env.template` file in root of the folder as `.env` into the same directory fill in the values.
+3. Run `poetry env activate` to activate the virtual environment
+4. Run `poetry env info --path` to get the path of the virtual environment
+5. In VSCode, `Ctrl + Shift + P` and type `Python: Select Interpreter`, select `Enter interpreter path...` and paste the path of the virtual environment. This will allow intellisense for the project
+6. Run `poetry run python pipeline/main.py` to start the application
+
 ## Components (flow from top to bottom)
 
 1. Data stream
