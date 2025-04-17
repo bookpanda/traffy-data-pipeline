@@ -34,12 +34,13 @@ Put these jar files in the `jars` folder in the root of the project. This is whe
 ## Components (flow from top to bottom)
 
 1. Data stream
-2. Kafka
-3. Spark
-4. S3
-5. AI/ML
-6. S3
+2. Kafka: ingests data
+3. Spark: cleans and transforms data
+4. PostgreSQL database: stores cleaned data
+5. Cleaned data visualization + dashboards
+6. AI/ML: trains on cleaned data, will be used for inferencing data from Kafka
+7. Elasticsearch database: stores predictions
+8. Predictions visualization + dashboards
 
-- Visualization will be done after component 2, 4, 6
 - Data stream is simulated using a Python script feeding the Traffy Fondue dataset into Kafka
 - Airflow will be used to orchestrate the data pipeline
