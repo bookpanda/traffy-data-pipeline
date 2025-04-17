@@ -1,5 +1,5 @@
 from pyspark.sql import DataFrame
-from pyspark.sql.functions import col, split, to_timestamp
+from pyspark.sql.functions import col, regexp_replace, split, to_timestamp
 
 
 def extract_lat_long(df: DataFrame) -> DataFrame:
@@ -24,3 +24,9 @@ def convert_timestamp(df: DataFrame) -> DataFrame:
     df = df.withColumn("last_activity", to_timestamp(col("last_activity")))
 
     return df
+
+
+def convert_type_to_list(df: DataFrame) -> DataFrame:
+    return df.withColumn(
+        "type", split(regexp_replace(col("type"), "[{}]", ""), ",")  # remove { and }
+    )
