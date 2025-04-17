@@ -19,6 +19,10 @@ packages = [
     { include = "pipeline" }
 ]
 
+[tool.poetry.scripts]
+setup = "pipeline.main:main"
+stream = "pipeline.stream.main:main"
+
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.29.5"
 
