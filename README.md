@@ -34,9 +34,9 @@ Put these jar files in the `jars` folder in the root of the project. This is whe
 
 ## Components (flow from top to bottom)
 
-1. Data stream
-2. Kafka: ingests data
-3. Spark: cleans and transforms data
+1. Data stream: simulated using a Python script with Traffy Fondue dataset
+2. Kafka: ingests data from stream
+3. Spark: cleans and transforms data from Kafka
 4. PostgreSQL database: stores cleaned data
 5. Cleaned data visualization + dashboards
 6. AI/ML: trains on cleaned data, will be used for inferencing data from Kafka
