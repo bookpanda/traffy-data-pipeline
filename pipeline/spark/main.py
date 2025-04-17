@@ -29,6 +29,7 @@ def main():
         .option("kafka.bootstrap.servers", "localhost:9092")
         .option("subscribe", "raw_data")
         # .option("startingOffsets", "earliest")  # Enable to consume old messages
+        .option("failOnDataLoss", "false")
         .load()
     )
 
