@@ -13,38 +13,38 @@ from pipeline.spark.transforms import (
 )
 from pipeline.spark.write import write_to_postgres
 
-JAR_DIR = os.path.abspath("jars")
-JARS = ",".join([os.path.join(JAR_DIR, jar) for jar in os.listdir(JAR_DIR)])
 
-spark = (
-    SparkSession.builder.appName("KafkaConsumer")
-    .config("spark.jars", JARS)
-    .getOrCreate()
-)
+def main():
+    JAR_DIR = os.path.abspath("jars")
+    JARS = ",".join([os.path.join(JAR_DIR, jar) for jar in os.listdir(JAR_DIR)])
 
-df = (
-    spark.readStream.format("kafka")
-    .option("kafka.bootstrap.servers", "localhost:9092")
-    .option("subscribe", "raw_data")
-    # .option(
-    #     "startingOffsets", "earliest"
-    # )  # also consume data ingested before spark started
-    .load()
-)
+    spark = (
+        SparkSession.builder.appName("KafkaConsumer")
+        .config("spark.jars", JARS)
+        .getOrCreate()
+    )
 
-deserialize_udf = udf(deserialize_avro, StringType())
-decoded_df = df.withColumn("value", deserialize_udf("value"))
-parsed_df = decoded_df.withColumn("parsed", from_json(col("value"), schema))
-structured_df = parsed_df.select("parsed.*")
+    df = (
+        spark.readStream.format("kafka")
+        .option("kafka.bootstrap.servers", "localhost:9092")
+        .option("subscribe", "raw_data")
+        # .option("startingOffsets", "earliest")  # Enable to consume old messages
+        .load()
+    )
 
-structured_df = extract_lat_long(structured_df)
-structured_df = convert_timestamp(structured_df)
-structured_df = convert_type_to_list(structured_df)
+    deserialize_udf = udf(deserialize_avro, StringType())
+    decoded_df = df.withColumn("value", deserialize_udf("value"))
+    parsed_df = decoded_df.withColumn("parsed", from_json(col("value"), schema))
+    structured_df = parsed_df.select("parsed.*")
 
-structured_df.writeStream.foreachBatch(write_to_postgres).outputMode("append").option(
-    "checkpointLocation", "./checkpoints/pg_sink"
-).start().awaitTermination()
+    structured_df = extract_lat_long(structured_df)
+    structured_df = convert_timestamp(structured_df)
+    structured_df = convert_type_to_list(structured_df)
 
-# structured_df.writeStream.format("console").option(
-#     "truncate", False
-# ).start().awaitTermination()
+    structured_df.writeStream.foreachBatch(write_to_postgres).outputMode(
+        "append"
+    ).option("checkpointLocation", "./checkpoints/pg_sink").start().awaitTermination()
+
+
+if __name__ == "__main__":
+    main()

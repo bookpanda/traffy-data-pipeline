@@ -1,11 +1,9 @@
-from pipeline.kafka_client import consume_messages
+from pipeline.spark import main as spark_main
 
 
 def main():
     print("Starting setup...")
-    # get_producer()
-    # print("Kafka producer initialized.")
-    consume_messages("raw_data")
+    spark_main()
 
 
 if __name__ == "__main__":
