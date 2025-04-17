@@ -1,4 +1,5 @@
 import io
+import json
 import os
 
 import avro
@@ -12,6 +13,9 @@ schema = avro.schema.parse(open(schema_path).read())
 
 
 def serialize_avro(data: dict) -> bytes:
+    """
+    Serialize a dictionary to Avro bytes.
+    """
     bytes_writer = io.BytesIO()
     encoder = avro.io.BinaryEncoder(bytes_writer)
     writer = avro.io.DatumWriter(schema)
@@ -21,8 +25,14 @@ def serialize_avro(data: dict) -> bytes:
 
 
 def deserialize_avro(raw_bytes: bytes) -> str:
-    bytes_reader = io.BytesIO(raw_bytes)
-    decoder = avro.io.BinaryDecoder(bytes_reader)
-    reader = avro.io.DatumReader(schema)
-
-    return reader.read(decoder)
+    """
+    Deserialize Avro bytes to JSON string.
+    """
+    try:
+        bytes_reader = io.BytesIO(raw_bytes)
+        decoder = avro.io.BinaryDecoder(bytes_reader)
+        reader = avro.io.DatumReader(schema)
+        deserialized_data = reader.read(decoder)
+        return json.dumps(deserialized_data)
+    except Exception as e:
+        return json.dumps({"error": str(e)})
