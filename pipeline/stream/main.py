@@ -1,1 +1,2 @@
-print("hi")
+def main():
+    print("stream")
