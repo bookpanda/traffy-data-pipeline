@@ -29,7 +29,7 @@ services:
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: messenger_db
+      POSTGRES_DB: pipeline_db
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:

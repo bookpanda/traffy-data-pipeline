@@ -1,10 +1,4 @@
-from pyspark.sql.types import (
-    FloatType,
-    IntegerType,
-    StringType,
-    StructType,
-    TimestampType,
-)
+from pyspark.sql.types import FloatType, IntegerType, StringType, StructType
 
 schema = (
     StructType()

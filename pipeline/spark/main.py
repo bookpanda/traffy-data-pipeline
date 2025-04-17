@@ -11,6 +11,7 @@ from pipeline.spark.transforms import (
     convert_type_to_list,
     extract_lat_long,
 )
+from pipeline.spark.write import write_to_postgres
 
 JAR_DIR = os.path.abspath("jars")
 JARS = ",".join([os.path.join(JAR_DIR, jar) for jar in os.listdir(JAR_DIR)])
