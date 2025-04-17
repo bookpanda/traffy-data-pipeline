@@ -20,7 +20,7 @@ def write_to_elasticsearch(batch_df: DataFrame, epoch_id):
     try:
         (
             batch_df.write.format("org.elasticsearch.spark.sql")
-            .option("es.resource", "tickets/_doc")
+            .option("es.resource", "tickets")
             .option("es.nodes", "localhost")
             .option("es.port", "9200")
             .option("es.net.http.auth.user", "elastic")
