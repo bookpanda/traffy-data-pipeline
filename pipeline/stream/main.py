@@ -21,6 +21,20 @@ def handle_nan(data):
     }
 
 
+count = 0
+
+
+def get_count():
+    return count
+
+
+def decrease_count_by(amount: int):
+    global count
+    count -= amount
+    if count < 0:
+        count = 0
+
+
 # 500 rows/s = 1600s
 def main():
     print(f"stream size {len(df)}")
@@ -29,6 +43,7 @@ def main():
         data = row.to_dict()
         data = handle_nan(data)
         send_message("raw_data", data)
+        count += 1
 
         time.sleep(sleep_time)
 
