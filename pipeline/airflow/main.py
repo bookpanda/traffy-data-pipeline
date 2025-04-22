@@ -1,19 +1,18 @@
 from datetime import datetime
 
 from airflow import DAG
-from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOperator
+from airflow.providers.standard.operators.python import PythonOperator
+
+from pipeline.spark import main as spark_main
 
 from .message_count import MessageCountSensor
 
 
 def main():
     with DAG("pipeline_control", start_date=datetime(2021, 1, 1), catchup=False) as dag:
-        spark_task = SparkSubmitOperator(
-            task_id="process_stream_data",
-            application="./spark/main.py",
-            conn_id="spark_default",
-            conf={"spark.executor.memory": "2g", "spark.driver.memory": "1g"},
-            # application_args=["--input", "s3://your-bucket/input-data"],
+        trigger_spark = PythonOperator(
+            task_id="trigger_spark_job",
+            python_callable=spark_main,
         )
 
         message_sensor = MessageCountSensor(
@@ -23,4 +22,4 @@ def main():
             timeout=3600,
         )
 
-    message_sensor >> spark_task
+    message_sensor >> trigger_spark
