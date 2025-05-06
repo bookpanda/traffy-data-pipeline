@@ -30,8 +30,18 @@ Put these jar files in the `jars` folder in the root of the project. This is whe
 5. Run `poetry env info --path` to get the path of the virtual environment
 6. In VSCode, `Ctrl + Shift + P` and type `Python: Select Interpreter`, select `Enter interpreter path...` and paste the path of the virtual environment. This will allow intellisense for the project
 7. Run `docker-compose up` to start the Kafka container
-8. Run `poetry run setup` to setup the pipeline
-9. Run `poetry run stream` to start streaming data into the pipeline
+8. For the first time (when there's no docker volume):
+
+```bash
+# Create the topic so that spark can connect to kafka
+docker exec -it broker bash
+/opt/kafka/bin/kafka-topics.sh --create --bootstrap-server broker:19092 \
+  --topic raw_data --partitions 3 --replication-factor 1
+
+```
+
+9. Run `poetry run setup` to setup the pipeline
+10. Run `poetry run stream` to start streaming data into the pipeline
 
 ## Components (flow from top to bottom)
 
