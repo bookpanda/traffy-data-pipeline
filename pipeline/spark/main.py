@@ -41,6 +41,7 @@ def main():
     structured_df = extract_lat_long(structured_df)
     structured_df = convert_timestamp(structured_df)
     structured_df = convert_type_to_list(structured_df)
+    # data impute/one-hot-encoding will be done in ML module as it is not appropriate for stream data
 
     structured_df.writeStream.foreachBatch(
         lambda df, epoch_id: write_to_postgres(df, epoch_id)
