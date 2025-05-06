@@ -7,8 +7,9 @@ from tqdm import tqdm
 from pipeline.config import settings
 from pipeline.kafka_client import send_message
 
+# df = pd.read_csv("./data/bangkok_traffy_1k.csv")
+df = pd.read_csv("./data/bangkok_traffy_100k.csv")
 # df = pd.read_csv("./data/bangkok_traffy.csv")
-df = pd.read_csv("./data/bangkok_traffy_mini.csv")
 
 sleep_time = 1 / settings.STREAM_INGESTION_RATE
 
