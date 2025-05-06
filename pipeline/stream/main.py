@@ -21,7 +21,7 @@ def handle_nan(data):
     }
 
 
-# 500 rows/s = 1600s
+# 787026 rows / 200 rows/s = 3935s
 def main():
     print(f"stream size {len(df)}")
 
