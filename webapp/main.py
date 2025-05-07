@@ -1,4 +1,8 @@
 import streamlit as st
+import folium
+from streamlit_folium import st_folium
+import pandas as pd
+
 
 comment = st.text_area("กรุณาใส่ความคิดเห็นของคุณ:", "")
 
@@ -24,6 +28,24 @@ for i in range(6):  # 6 rows
             # Place the checkbox in the correct column and update the selection array
             if cols[j].checkbox(categories[index]):
                 selection_array[index] = 1
+
+
+m = folium.Map(location=[13.7563, 100.5018], zoom_start=12)
+
+# Create a marker that updates with latitude and longitude on click
+click_marker = folium.LatLngPopup()
+
+# Add the click marker to the map
+m.add_child(click_marker)
+
+# Display the map
+location = st_folium(m, width=700)
+
+# Show the selected latitude and longitude if available
+if location and location['last_clicked']:
+    lat = location['last_clicked']['lat']
+    lon = location['last_clicked']['lng']
+    st.write(f"### ตำแหน่งที่เลือก: Latitude: {lat}, Longitude: {lon}")
 
 # Show the binary array
 st.markdown("### ผลลัพธ์เป็นอาเรย์:")
