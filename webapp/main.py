@@ -60,4 +60,10 @@ if st.button("📨 ส่งข้อมูล"):
     else:
         lat = location['last_clicked']['lat']
         lon = location['last_clicked']['lng']
-        find_org(comment, [lat, lon], selection_array)
+        organize=find_org(comment, [lat, lon], selection_array)
+        st.markdown("### องค์กรที่เกี่ยวข้อง:")
+        for org in organize:
+            if org:  # handle None values
+                st.write(f"- {org}")
+            else:
+                st.write("- ไม่พบข้อมูลองค์กร")
