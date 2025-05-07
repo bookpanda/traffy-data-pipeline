@@ -1,5 +1,7 @@
 import streamlit as st
 
+comment = st.text_area("กรุณาใส่ความคิดเห็นของคุณ:", "")
+
 # List of categories (24 categories for 6x4 table)
 categories = ['PM2.5', 'การเดินทาง', 'กีดขวาง', 'คนจรจัด', 'คลอง', 'ความปลอดภัย', 
               'ความสะอาด', 'จราจร', 'ต้นไม้', 'ถนน', 'ทางเท้า', 'ท่อระบายน้ำ', 
