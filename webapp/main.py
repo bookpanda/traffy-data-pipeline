@@ -48,10 +48,6 @@ if location and location['last_clicked']:
     lon = location['last_clicked']['lng']
     st.write(f"### ตำแหน่งที่เลือก: Latitude: {lat}, Longitude: {lon}")
 
-# Show the binary array
-st.markdown("### ผลลัพธ์เป็นอาเรย์:")
-st.write(selection_array)
-
 if st.button("📨 ส่งข้อมูล"):
     if not comment:
         st.error("⚠️ กรุณากรอกความคิดเห็น")
