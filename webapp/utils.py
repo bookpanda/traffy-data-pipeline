@@ -39,12 +39,13 @@ model = SentenceTransformer('./local_model')
 def find_org(comment, coord, type):
     text = preprocess_text(comment)
     coord = transform_coordinate(coord)
-    type = np.array(type)
+    type = np.array(type)/100
     text_vec = model.encode(text)
+    text_vec = text_vec/100*np.linalg.norm(text_vec)
     query_vector = np.hstack([text_vec, coord, type])
-    
+    print(text,coord)
     result = client.search(
-        collection_name="dsde_project",
+        collection_name="dsde_project2",
         query_vector=query_vector,
         limit=5,  # top 5 results
         with_payload=True
