@@ -2,6 +2,7 @@ import streamlit as st
 import folium
 from streamlit_folium import st_folium
 import pandas as pd
+from utils import find_org
 
 
 comment = st.text_area("กรุณาใส่ความคิดเห็นของคุณ:", "")
@@ -50,3 +51,13 @@ if location and location['last_clicked']:
 # Show the binary array
 st.markdown("### ผลลัพธ์เป็นอาเรย์:")
 st.write(selection_array)
+
+if st.button("📨 ส่งข้อมูล"):
+    if not comment:
+        st.error("⚠️ กรุณากรอกความคิดเห็น")
+    elif 'last_clicked' not in location or location['last_clicked'] is None:
+        st.error("⚠️ กรุณาคลิกเลือกตำแหน่งบนแผนที่")
+    else:
+        lat = location['last_clicked']['lat']
+        lon = location['last_clicked']['lng']
+        find_org(comment, [lat, lon], selection_array)
